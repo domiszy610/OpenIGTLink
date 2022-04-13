@@ -380,7 +380,7 @@ int ReceivePoint(igtl::Socket * socket, igtl::MessageHeader * header)
       }
     }
 
-  Sleep(int 200);
+  Sleep(200);
   // Allocate Transform Message Class
 
   igtl::PointMessage::Pointer pointMsg;

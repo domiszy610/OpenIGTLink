@@ -14,11 +14,26 @@
 #include <iostream>
 #include <math.h>
 #include <cstdlib>
+#include <iomanip>
+#include <cstring>
 
 #include "igtlOSUtil.h"
 #include "igtlPointMessage.h"
 #include "igtlClientSocket.h"
+#include "igtlMessageHeader.h"
+#include "igtlTransformMessage.h"
+#include "igtlImageMessage.h"
+#include "igtlServerSocket.h"
+#include "igtlStatusMessage.h"
+#include "igtlPositionMessage.h"
 
+#if OpenIGTLink_PROTOCOL_VERSION >= 2
+#include "igtlPointMessage.h"
+#include "igtlTrajectoryMessage.h"
+#include "igtlStringMessage.h"
+#include "igtlBindMessage.h"
+#include "igtlCapabilityMessage.h"
+#endif //OpenIGTLink_PROTOCOL_VERSION >= 2
 
 int main(int argc, char* argv[])
 {
@@ -102,7 +117,7 @@ int main(int argc, char* argv[])
   socket->Send(pointMsg->GetPackPointer(), pointMsg->GetPackSize());
   
   while(1){
-	  socket = serverSocket->WaitForConnection(1000);
+	 // socket = socket->WaitForConnection(1000);
     
     if (socket.IsNotNull()) // if client connected
       {
