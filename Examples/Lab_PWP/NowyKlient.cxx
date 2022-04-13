@@ -146,10 +146,10 @@ int main(int argc, char* argv[])
 
         std::cerr << "Time stamp: "
                   << sec << "." << std::setw(9) << std::setfill('0') 
-                  << nanosec << std::endl;
-
-
+                  << nanosec << std::endl;		
 	  ReceivePoint(socket, headerMsg);
+      }
+    }
 
   }
   
