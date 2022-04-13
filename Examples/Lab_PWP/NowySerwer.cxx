@@ -383,8 +383,8 @@ int ReceivePoint(igtl::Socket * socket, igtl::MessageHeader * header)
   Sleep(200);
   // Allocate Transform Message Class
 
-  igtl::PointMessage::Pointer pointMsg;
-  pointMsg = igtl::PointMessage::New();
+  //igtl::PointMessage::Pointer pointMsg;
+  //pointMsg = igtl::PointMessage::New();
   pointMsg->SetDeviceName("PointSender");
 
   //---------------------------

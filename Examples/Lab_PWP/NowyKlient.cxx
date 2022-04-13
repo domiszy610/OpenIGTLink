@@ -35,6 +35,7 @@
 #include "igtlCapabilityMessage.h"
 #endif //OpenIGTLink_PROTOCOL_VERSION >= 2
 
+int ReceivePoint(igtl::Socket * socket, igtl::MessageHeader * header);
 int main(int argc, char* argv[])
 {
   //------------------------------------------------------------
