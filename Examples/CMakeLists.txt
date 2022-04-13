@@ -25,7 +25,7 @@ if (${OpenIGTLink_PROTOCOL_VERSION} GREATER 1)
     Capability
     Trajectory
     SessionManager
-    NoweProjekty
+    Lab_PWP
     #TrackingDataUDPTransfer
     #SampleUDPProgam
     )
