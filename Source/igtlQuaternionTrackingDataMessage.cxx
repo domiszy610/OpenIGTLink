@@ -53,7 +53,7 @@ QuaternionTrackingDataElement::~QuaternionTrackingDataElement()
 
 int QuaternionTrackingDataElement::SetName(const char* name)
 {
-  if (strlen(name) <= IGTL_QTDATA_LEN_NAME)
+  if (name != NULL && strlen(name) <= IGTL_QTDATA_LEN_NAME)
     {
     this->m_Name = name;
     return 1;
@@ -168,7 +168,7 @@ StartQuaternionTrackingDataMessage::~StartQuaternionTrackingDataMessage()
 
 int StartQuaternionTrackingDataMessage::SetCoordinateName(const char* name)
 {
-  if (strlen(name) <= IGTL_STT_QTDATA_LEN_COORDNAME)
+  if (name != NULL && strlen(name) <= IGTL_STT_QTDATA_LEN_COORDNAME)
     {
     this->m_CoordinateName = name;
     return 1;
@@ -180,7 +180,7 @@ int StartQuaternionTrackingDataMessage::SetCoordinateName(const char* name)
 }
 
 
-int StartQuaternionTrackingDataMessage::CalculateContentBufferSize()
+igtlUint64 StartQuaternionTrackingDataMessage::CalculateContentBufferSize()
 {
   return IGTL_STT_QTDATA_SIZE;
 }
@@ -230,7 +230,7 @@ RTSQuaternionTrackingDataMessage::RTSQuaternionTrackingDataMessage()
 //----------------------------------------------------------------------
 // igtl::RTSQuaternionTrackingDataMessage class
 
-int  RTSQuaternionTrackingDataMessage::CalculateContentBufferSize()
+igtlUint64  RTSQuaternionTrackingDataMessage::CalculateContentBufferSize()
 { 
   return IGTL_RTS_QTDATA_SIZE; 
 }
@@ -305,7 +305,7 @@ void QuaternionTrackingDataMessage::GetQuaternionTrackingDataElement(int index, 
 }
 
 
-int QuaternionTrackingDataMessage::CalculateContentBufferSize()
+igtlUint64 QuaternionTrackingDataMessage::CalculateContentBufferSize()
 {
   return IGTL_QTDATA_ELEMENT_SIZE * this->m_QuaternionTrackingDataList.size();
 }
@@ -357,7 +357,8 @@ int QuaternionTrackingDataMessage::UnpackContent()
   int nElement = 0;
 #if OpenIGTLink_HEADER_VERSION >= 2
   element = (igtl_qtdata_element*) (this->m_Content);
-  nElement = igtl_qtdata_get_data_n(CalculateReceiveContentSize());
+  bool isUnpacked(true);
+  nElement = igtl_qtdata_get_data_n(CalculateReceiveContentSize(isUnpacked));
 #elif OpenIGTLink_PROTOCOL_VERSION <=2
   element = (igtl_qtdata_element*) this->m_Body;
   nElement = igtl_qtdata_get_data_n(this->m_BodySizeToRead);
