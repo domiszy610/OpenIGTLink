@@ -35,7 +35,7 @@ QueryMessage::~QueryMessage()
 
 int QueryMessage::SetDeviceUID(const char* string)
 {
-  if (string == NULL || strlen(string) > 0xFFFF) /* If the length is beyond the range of unsigned short */
+  if (strlen(string) > 0xFFFF) /* If the length is beyond the range of unsigned short */
     {
     return 0;
     }
@@ -64,7 +64,7 @@ std::string QueryMessage::GetDeviceUID()
   
 int QueryMessage::SetDataType(const char* dataType)
 {
-  if (dataType == NULL || strlen(dataType) > IGTL_QUERY_DATE_TYPE_SIZE) /* If the length is beyond the range specified by the spec */
+  if (strlen(dataType) > IGTL_QUERY_DATE_TYPE_SIZE) /* If the length is beyond the range specified by the spec */
   {
     return 0;
   }
@@ -80,7 +80,7 @@ int QueryMessage::SetDataType(const std::string& dataType)
 
 
 
-igtlUint64 QueryMessage::CalculateContentBufferSize()
+int QueryMessage::CalculateContentBufferSize()
 {
   // Body pack size is the sum of DeviceUID and data type fields
   return IGTL_QUERY_HEADER_SIZE + this->m_DeviceUID.length();

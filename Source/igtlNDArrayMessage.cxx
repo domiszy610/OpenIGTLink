@@ -175,9 +175,9 @@ int NDArrayMessage::SetArray(int type, ArrayBase * a)
 }
 
 
-igtlUint64 NDArrayMessage::CalculateContentBufferSize()
+int NDArrayMessage::CalculateContentBufferSize()
 {
-  igtlUint64 dataSize;
+  int dataSize;
   int dim;
   if (this->m_Array == NULL)
   {
@@ -238,8 +238,7 @@ int NDArrayMessage::PackContent()
 int NDArrayMessage::UnpackContent()
 {
   igtl_ndarray_info info;
-  bool isUnpacked(true);
-  igtl_ndarray_unpack(IGTL_TYPE_PREFIX_NONE, this->m_Content, &info, this->CalculateReceiveContentSize(isUnpacked));
+  igtl_ndarray_unpack(IGTL_TYPE_PREFIX_NONE, this->m_Content, &info, this->CalculateReceiveContentSize());
 
   this->m_Type = info.type;
   ArrayBase::IndexType size;

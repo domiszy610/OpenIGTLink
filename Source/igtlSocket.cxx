@@ -43,7 +43,6 @@
 #endif
 
 #include <string.h>
-#include <limits>
 
 #if defined(_WIN32) && !defined(__CYGWIN__)
 #define WSA_VERSION MAKEWORD(1,1)
@@ -97,7 +96,7 @@ int Socket::CreateSocket()
 #endif
 
   int sock = socket(AF_INET, SOCK_STREAM, 0);
-  // Eliminate windows 0.2 second delay sending (buffering) data.
+  // Elimate windows 0.2 second delay sending (buffering) data.
   int on = 1;
   if (setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char*)&on, sizeof(on)))
     {
@@ -298,7 +297,7 @@ void Socket::CloseSocket(int socketdescriptor)
 }
 
 //-----------------------------------------------------------------------------
-int Socket::Send(const void* data, igtlUint64 length)
+int Socket::Send(const void* data, int length)
 {
   if (!this->GetConnected())
     {
@@ -310,7 +309,7 @@ int Socket::Send(const void* data, igtlUint64 length)
     return 1;
     }
   const char* buffer = reinterpret_cast<const char*>(data);
-  igtlUint64 total = 0;
+  int total = 0;
   do
     {
     int flags;
@@ -337,8 +336,7 @@ int Socket::Send(const void* data, igtlUint64 length)
     flags = 0;
   #endif
 #endif
-    int n = send(this->m_SocketDescriptor, buffer + total, (length > std::numeric_limits<int>::max()) ? std::numeric_limits<int>::max() : length-total, flags);
-    
+    int n = send(this->m_SocketDescriptor, buffer+total, length-total, flags);
     if(n < 0)
       {
       // FIXME : Use exceptions ?  igtlErrorMacro("Socket Error: Send failed.");
@@ -350,23 +348,22 @@ int Socket::Send(const void* data, igtlUint64 length)
 }
 
 //-----------------------------------------------------------------------------
-igtlUint64 Socket::Receive(void* data, igtlUint64 length, bool& timeout, int readFully/*=1*/)
+int Socket::Receive(void* data, int length, int readFully/*=1*/)
 {
   if (!this->GetConnected())
     {
-    timeout = false;
     return 0;
     }
 
   char* buffer = reinterpret_cast<char*>(data);
-  igtlUint64 total = 0;
+  int total = 0;
   do
     {
 #if defined(_WIN32) && !defined(__CYGWIN__)
     int trys = 0;
 #endif
 
-    int n = recv(this->m_SocketDescriptor, buffer + total, (length > std::numeric_limits<int>::max() ? std::numeric_limits<int>::max() : length - total), 0);
+    int n = recv(this->m_SocketDescriptor, buffer+total, length-total, 0);
 
 #if defined(_WIN32) && !defined(__CYGWIN__)
     if(n == 0)
@@ -385,8 +382,7 @@ igtlUint64 Socket::Receive(void* data, igtlUint64 length, bool& timeout, int rea
     else if (n < 0)
       {
       // TODO: Need to check if this means timeout.
-      timeout = true;
-      return 0;
+      return -1;
       }
 #else
     if(n == 0) // Disconnected
@@ -397,8 +393,7 @@ igtlUint64 Socket::Receive(void* data, igtlUint64 length, bool& timeout, int rea
     else if (n < 0) // Error (including time out)
       {
       // TODO: If it is time-out, errno == EAGAIN
-      timeout = true;
-      return 0;
+      return -1;
       }
 #endif
 
@@ -624,17 +619,18 @@ int Socket::GetSocketAddressAndPort(std::string& address, int& port)
 
 
 //-----------------------------------------------------------------------------
-int Socket::Skip(igtlUint64 length, int skipFully/*=1*/)
+int Socket::Skip(int length, int skipFully/*=1*/)
 {
+
   if (length == 0)
     {
     return 0;
     }
 
   unsigned char dummy[256];
-  igtlUint64 block  = 256;
-  igtlUint64 n = 0;
-  igtlUint64 remain = length;
+  int block  = 256;
+  int n      = 0;
+  int remain = length;
 
   do
     {
@@ -643,8 +639,7 @@ int Socket::Skip(igtlUint64 length, int skipFully/*=1*/)
       block = remain;
       }
     
-    bool timeout(false);
-    n = this->Receive(dummy, block, timeout, skipFully);
+    n = this->Receive(dummy, block, skipFully);
     if (!skipFully && n <= 0)
       {
       break;
@@ -654,6 +649,7 @@ int Socket::Skip(igtlUint64 length, int skipFully/*=1*/)
   while (remain > 0 || (skipFully && n < block));
 
   return (length - remain);
+
 }
 
 //-----------------------------------------------------------------------------

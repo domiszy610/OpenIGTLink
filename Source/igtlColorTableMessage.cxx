@@ -67,7 +67,7 @@ int ColorTableMessage::GetColorTableSize()
 
 }
 
-igtlUint64 ColorTableMessage::CalculateContentBufferSize()
+int ColorTableMessage::CalculateContentBufferSize()
 {
   return GetColorTableSize() + IGTL_COLORTABLE_HEADER_SIZE;
 }

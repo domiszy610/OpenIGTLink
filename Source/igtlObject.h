@@ -72,7 +72,7 @@ public:
    * object that is exactly the same type as the referring object.
    * This is useful in cases where an object has been cast back to a
    * base class. */
-  LightObject::Pointer CreateAnother() const override;
+  virtual LightObject::Pointer CreateAnother() const;
 
   /** Turn debugging output on.  */
   virtual void DebugOn() const;
@@ -94,13 +94,13 @@ public:
   //  virtual void Modified() const;
   
   /** Increase the reference count (mark as used by another object).  */
-  void Register() const override;
+  virtual void Register() const;
 
   /** Decrease the reference count (release by another object).  */
-  void UnRegister() const override;
+  virtual void UnRegister() const;
 
   /** Sets the reference count (use with care)  */
-  void SetReferenceCount(int) override;
+  virtual void SetReferenceCount(int);
 
   /** This is a global flag that controls whether any debug, warning
    *  or error messages are displayed.  */
@@ -170,7 +170,7 @@ protected:
    * including superclasses. Typically not called by the user (use Print()
    * instead) but used in the hierarchical print process to combine the
    * output of several classes.  */
-  virtual void PrintSelf(std::ostream& os) const override;
+  virtual void PrintSelf(std::ostream& os) const;
 
   //bool PrintObservers(std::ostream& os) const;
 

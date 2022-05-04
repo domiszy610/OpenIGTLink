@@ -100,8 +100,7 @@ int main(int argc, char* argv[])
         headerMsg->InitPack();
 
         // Receive generic header from the socket
-        bool timeout(false);
-        igtlUint64 r = socket->Receive(headerMsg->GetPackPointer(), headerMsg->GetPackSize(), timeout);
+        int r = socket->Receive(headerMsg->GetPackPointer(), headerMsg->GetPackSize());
         if (r == 0)
           {
           socket->CloseSocket();
@@ -194,8 +193,7 @@ int ReceiveTransform(igtl::Socket * socket, igtl::MessageHeader * header)
   transMsg->AllocatePack();
   
   // Receive transform data from the socket
-  bool timeout(false);
-  socket->Receive(transMsg->GetPackBodyPointer(), transMsg->GetPackBodySize(), timeout);
+  socket->Receive(transMsg->GetPackBodyPointer(), transMsg->GetPackBodySize());
   
   // Deserialize the transform data
   // If you want to skip CRC check, call Unpack() without argument.
@@ -226,8 +224,7 @@ int ReceivePosition(igtl::Socket * socket, igtl::MessageHeader * header)
   positionMsg->AllocatePack();
   
   // Receive position position data from the socket
-  bool timeout(false);
-  socket->Receive(positionMsg->GetPackBodyPointer(), positionMsg->GetPackBodySize(), timeout);
+  socket->Receive(positionMsg->GetPackBodyPointer(), positionMsg->GetPackBodySize());
   
   // Deserialize the transform data
   // If you want to skip CRC check, call Unpack() without argument.
@@ -265,8 +262,7 @@ int ReceiveImage(igtl::Socket * socket, igtl::MessageHeader * header)
   imgMsg->AllocatePack();
   
   // Receive transform data from the socket
-  bool timeout(false);
-  socket->Receive(imgMsg->GetPackBodyPointer(), imgMsg->GetPackBodySize(), timeout);
+  socket->Receive(imgMsg->GetPackBodyPointer(), imgMsg->GetPackBodySize());
   
   // Deserialize the transform data
   // If you want to skip CRC check, call Unpack() without argument.
@@ -319,8 +315,7 @@ int ReceiveStatus(igtl::Socket * socket, igtl::MessageHeader * header)
   statusMsg->AllocatePack();
   
   // Receive transform data from the socket
-  bool timeout(false);
-  socket->Receive(statusMsg->GetPackBodyPointer(), statusMsg->GetPackBodySize(), timeout);
+  socket->Receive(statusMsg->GetPackBodyPointer(), statusMsg->GetPackBodySize());
   
   // Deserialize the transform data
   // If you want to skip CRC check, call Unpack() without argument.
@@ -354,8 +349,7 @@ int ReceivePoint(igtl::Socket * socket, igtl::MessageHeader * header)
   pointMsg->AllocatePack();
 
   // Receive transform data from the socket
-  bool timeout(false);
-  socket->Receive(pointMsg->GetPackBodyPointer(), pointMsg->GetPackBodySize(), timeout);
+  socket->Receive(pointMsg->GetPackBodyPointer(), pointMsg->GetPackBodySize());
 
   // Deserialize the transform data
   // If you want to skip CRC check, call Unpack() without argument.
@@ -401,8 +395,7 @@ int ReceiveTrajectory(igtl::Socket * socket, igtl::MessageHeader::Pointer& heade
   trajectoryMsg->AllocatePack();
 
   // Receive transform data from the socket
-  bool timeout(false);
-  socket->Receive(trajectoryMsg->GetPackBodyPointer(), trajectoryMsg->GetPackBodySize(), timeout);
+  socket->Receive(trajectoryMsg->GetPackBodyPointer(), trajectoryMsg->GetPackBodySize());
 
   // Deserialize the transform data
   // If you want to skip CRC check, call Unpack() without argument.
@@ -452,8 +445,7 @@ int ReceiveString(igtl::Socket * socket, igtl::MessageHeader * header)
   stringMsg->AllocatePack();
 
   // Receive transform data from the socket
-  bool timeout(false);
-  socket->Receive(stringMsg->GetPackBodyPointer(), stringMsg->GetPackBodySize(), timeout);
+  socket->Receive(stringMsg->GetPackBodyPointer(), stringMsg->GetPackBodySize());
 
   // Deserialize the transform data
   // If you want to skip CRC check, call Unpack() without argument.
@@ -481,8 +473,7 @@ int ReceiveBind(igtl::Socket * socket, igtl::MessageHeader * header)
   bindMsg->AllocatePack();
 
   // Receive transform data from the socket
-  bool timeout(false);
-  socket->Receive(bindMsg->GetPackBodyPointer(), bindMsg->GetPackBodySize(), timeout);
+  socket->Receive(bindMsg->GetPackBodyPointer(), bindMsg->GetPackBodySize());
 
   // Deserialize the transform data
   // If you want to skip CRC check, call Unpack() without argument.
@@ -536,8 +527,7 @@ int ReceiveCapability(igtl::Socket * socket, igtl::MessageHeader * header)
   capabilMsg->AllocatePack();
 
   // Receive transform data from the socket
-  bool timeout(false);
-  socket->Receive(capabilMsg->GetPackBodyPointer(), capabilMsg->GetPackBodySize(), timeout);
+  socket->Receive(capabilMsg->GetPackBodyPointer(), capabilMsg->GetPackBodySize());
 
   // Deserialize the transform data
   // If you want to skip CRC check, call Unpack() without argument.

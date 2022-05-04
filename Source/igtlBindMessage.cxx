@@ -170,11 +170,11 @@ int BindMessage::GetChildMessage(unsigned int i, igtl::MessageBase * child)
 }
 
 
-igtlUint64 BindMessage::CalculateContentBufferSize()
+int BindMessage::CalculateContentBufferSize()
 {
-  igtlUint64 size;
-  igtlUint64 nameTableSectionSize = 0; // Size of name table section
-  igtlUint64 dataSectionSize = 0; // Size of data section
+  int size;
+  int nameTableSectionSize = 0; // Size of name table section
+  int dataSectionSize = 0; // Size of data section
 
   size = sizeof(igtlUint16)  // Number of child messages section
     + (IGTL_HEADER_TYPE_SIZE + sizeof(igtlUint64)) * this->m_ChildMessages.size() // BIND header
@@ -313,9 +313,9 @@ int GetBindMessage::AppendChildMessage(const char * type, const char * name)
 }
 
 
-igtlUint64 GetBindMessage::CalculateContentBufferSize()
+int GetBindMessage::CalculateContentBufferSize()
 {
-  igtlUint64 size;
+  int size;
 
   size = sizeof(igtlUint16)  // Number of child messages section
     + IGTL_HEADER_TYPE_SIZE * this->m_ChildMessages.size() // BIND header
@@ -423,7 +423,7 @@ igtlUint64 StartBindMessage::GetResolution()
 }
 
 
-igtlUint64 StartBindMessage::CalculateContentBufferSize()
+int StartBindMessage::CalculateContentBufferSize()
 {
   if (this->m_ChildMessages.size() == 0)
     {
@@ -513,7 +513,7 @@ int StartBindMessage::UnpackContent()
 }
 
 
-igtlUint64  RTSBindMessage::CalculateContentBufferSize()
+int  RTSBindMessage::CalculateContentBufferSize()
 { 
   return sizeof (igtlUint8);
 }

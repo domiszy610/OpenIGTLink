@@ -51,7 +51,7 @@ protected:
   ClientSocket();
   ~ClientSocket();
 
-  void PrintSelf(std::ostream& os) const override;
+  void PrintSelf(std::ostream& os) const;
 
   friend class ServerSocket;
 

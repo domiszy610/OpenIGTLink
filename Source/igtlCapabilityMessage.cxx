@@ -86,7 +86,7 @@ const char* CapabilityMessage::GetType(int id)
 }
 
 
-igtlUint64 CapabilityMessage::CalculateContentBufferSize()
+int CapabilityMessage::CalculateContentBufferSize()
 {
   return (sizeof(char) * IGTL_HEADER_TYPE_SIZE * this->m_TypeNames.size());
 }
@@ -125,8 +125,7 @@ int CapabilityMessage::UnpackContent()
   igtl_capability_info info;
 
   igtl_capability_init_info(&info);
-  bool isUnpacked(true);
-  igtl_capability_unpack(this->m_Content, &info, this->CalculateReceiveContentSize(isUnpacked));
+  igtl_capability_unpack(this->m_Content, &info, this->CalculateReceiveContentSize());
 
   int ntypes = info.ntypes;
 

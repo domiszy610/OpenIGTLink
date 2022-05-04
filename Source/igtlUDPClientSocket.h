@@ -53,7 +53,7 @@ protected:
   UDPClientSocket();
   ~UDPClientSocket();
 
-  void PrintSelf(std::ostream& os) const override;
+  void PrintSelf(std::ostream& os) const;
 
   friend class UDPServerSocket;
 

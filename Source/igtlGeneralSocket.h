@@ -143,7 +143,7 @@ namespace igtl
     GeneralSocket();
     ~GeneralSocket();
     
-    void PrintSelf(std::ostream& os) const override;
+    void PrintSelf(std::ostream& os) const;
     
     int m_SocketDescriptor;
     igtlGetMacro(SocketDescriptor, int);

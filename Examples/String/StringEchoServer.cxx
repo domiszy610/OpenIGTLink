@@ -56,8 +56,7 @@ int main(int argc, char* argv[])
     while (socket.IsNotNull() && socket->GetConnected())
       {      
       hdrMsg->InitPack();
-      bool timeout(false);
-      igtlUint64 r = socket->Receive(hdrMsg->GetPackPointer(), hdrMsg->GetPackSize(), timeout);
+      int r = socket->Receive(hdrMsg->GetPackPointer(), hdrMsg->GetPackSize());
 
       // check message
       if (r == 0) 
@@ -73,8 +72,7 @@ int main(int argc, char* argv[])
       igtl::StringMessage::Pointer strMsg(igtl::StringMessage::New());
       strMsg->SetMessageHeader(hdrMsg);
       strMsg->AllocatePack();
-      timeout = false;
-      socket->Receive(strMsg->GetPackBodyPointer(), strMsg->GetPackBodySize(), timeout);
+      socket->Receive(strMsg->GetPackBodyPointer(), strMsg->GetPackBodySize());
       int c = strMsg->Unpack();
 
       // echo message back

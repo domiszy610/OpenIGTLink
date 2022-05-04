@@ -145,9 +145,9 @@ void PositionMessage::GetQuaternion(float* ox, float* oy, float* oz, float* w)
   *w  = this->m_Quaternion[3];
 }
 
-igtlUint64 PositionMessage::CalculateContentBufferSize()
+int PositionMessage::CalculateContentBufferSize()
 {
-  igtlUint64 ret;
+  int ret;
 
   switch (this->m_PackType)
     {
@@ -219,9 +219,8 @@ int PositionMessage::UnpackContent()
   p = (igtl_position*)(this->m_Body);
 #endif
 
-  bool isUnpacked(true);
-  igtl_uint64 contentSize = CalculateReceiveContentSize(isUnpacked);
-  if( !isUnpacked)
+  int contentSize = CalculateReceiveContentSize();
+  if( contentSize == -1 )
   {
     return 0;
   }

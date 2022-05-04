@@ -80,7 +80,7 @@ protected:
   virtual ~TimeStamp();
 
   /** Print the object information in a stream. */
-  void PrintSelf( std::ostream& os) const override;
+  virtual void PrintSelf( std::ostream& os) const;
 
 private:
 

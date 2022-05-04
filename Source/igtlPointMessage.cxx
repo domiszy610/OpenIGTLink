@@ -52,7 +52,7 @@ PointElement::~PointElement()
 
 int PointElement::SetName(const char* name)
 {
-  if (name != NULL && strlen(name) <= IGTL_POINT_LEN_NAME)
+  if (strlen(name) <= IGTL_POINT_LEN_NAME)
     {
     this->m_Name = name;
     return 1;
@@ -66,7 +66,7 @@ int PointElement::SetName(const char* name)
 
 int PointElement::SetGroupName(const char* grpname)
 {
-  if (grpname != NULL && strlen(grpname) <= IGTL_POINT_LEN_GROUP_NAME)
+  if (strlen(grpname) <= IGTL_POINT_LEN_GROUP_NAME)
     {
     this->m_GroupName = grpname;
     return 1;
@@ -147,7 +147,7 @@ void PointElement::GetPosition(igtlFloat32& x, igtlFloat32& y, igtlFloat32& z)
 
 int PointElement::SetOwner(const char* owner)
 {
-  if (owner != NULL && strlen(owner) <= IGTL_POINT_LEN_OWNER)
+  if (strlen(owner) <= IGTL_POINT_LEN_OWNER)
     {
     this->m_Owner = owner;
     return 1;
@@ -203,7 +203,7 @@ void PointMessage::GetPointElement(int index, PointElement::Pointer& elem)
 }
 
 
-igtlUint64 PointMessage::CalculateContentBufferSize()
+int PointMessage::CalculateContentBufferSize()
 {
   // The content size is the sum of the header size and status message size.
   return IGTL_POINT_ELEMENT_SIZE * this->m_PointList.size();
@@ -258,8 +258,7 @@ int PointMessage::UnpackContent()
   int nElement = 0;
 #if OpenIGTLink_HEADER_VERSION >= 2
   element = (igtl_point_element*) (this->m_Content);
-  bool isUnpacked(true);
-  nElement = igtl_point_get_data_n(CalculateReceiveContentSize(isUnpacked));
+  nElement = igtl_point_get_data_n(CalculateReceiveContentSize());
 #elif OpenIGTLink_PROTOCOL_VERSION <=2
   element = (igtl_point_element*) this->m_Body;
   nElement = igtl_point_get_data_n(this->m_BodySizeToRead);

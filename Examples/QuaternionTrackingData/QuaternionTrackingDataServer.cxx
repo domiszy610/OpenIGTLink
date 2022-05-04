@@ -90,8 +90,7 @@ int main(int argc, char* argv[])
         headerMsg->InitPack();
 
         // Receive generic header from the socket
-        bool timeout(false);
-        igtlUint64 rs = socket->Receive(headerMsg->GetPackPointer(), headerMsg->GetPackSize(), timeout);
+        int rs = socket->Receive(headerMsg->GetPackPointer(), headerMsg->GetPackSize());
         if (rs == 0)
           {
           if (threadID >= 0)
@@ -123,8 +122,7 @@ int main(int argc, char* argv[])
           startQuaternionTracking->SetMessageHeader(headerMsg);
           startQuaternionTracking->AllocatePack();
         
-          bool timeout(false);
-          igtlUint64 r2 = socket->Receive(startQuaternionTracking->GetPackBodyPointer(), startQuaternionTracking->GetPackBodySize(), timeout);
+          int r2 = socket->Receive(startQuaternionTracking->GetPackBodyPointer(), startQuaternionTracking->GetPackBodySize());
           int c = startQuaternionTracking->Unpack(1);
           if (c & igtl::MessageHeader::UNPACK_BODY) // if CRC check is OK
             {

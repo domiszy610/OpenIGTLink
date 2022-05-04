@@ -67,7 +67,7 @@ protected:
   /// A structure to manage properties of a child message, including message type, message name,
   /// size and pointer to the class instance of the child message. A ChildMessageInfo structure is
   /// allocated per child message and managed by a vector m_ChildMessages.
-  typedef struct _ChildMessageInfo {
+  typedef struct {
     std::string  type;
     std::string  name;
     igtlUint64   size;
@@ -99,9 +99,9 @@ protected:
   
 protected:
 
-  igtlUint64 CalculateContentBufferSize() override;
-  int  PackContent() override;
-  int  UnpackContent() override;
+  virtual int  CalculateContentBufferSize();
+  virtual int  PackContent();
+  virtual int  UnpackContent();
 
 };
 
@@ -127,9 +127,9 @@ protected:
   
 protected:
   
-  igtlUint64 CalculateContentBufferSize() override;
-  int  PackContent() override;
-  int  UnpackContent() override;
+  virtual int  CalculateContentBufferSize();
+  virtual int  PackContent();
+  virtual int  UnpackContent();
 
 };
 
@@ -159,9 +159,9 @@ protected:
   
 protected:
 
-  igtlUint64 CalculateContentBufferSize() override;
-  int  PackContent() override;
-  int  UnpackContent() override;
+  virtual int  CalculateContentBufferSize();
+  virtual int  PackContent();
+  virtual int  UnpackContent();
 
   igtlUint64   m_Resolution;
 
@@ -181,9 +181,9 @@ protected:
   ~StopBindMessage() {};
 
 protected:
-  igtlUint64 CalculateContentBufferSize() override { return 0; };
-  int  PackContent()   override     { AllocateBuffer(); return 1; };
-  int  UnpackContent()   override   { return 1; };
+  virtual int  CalculateContentBufferSize() { return 0; };
+  virtual int  PackContent()        { AllocateBuffer(); return 1; };
+  virtual int  UnpackContent()      { return 1; };
 
 };
 
@@ -216,9 +216,9 @@ protected:
   igtlUint8 m_Status;
 
 protected:
-  igtlUint64 CalculateContentBufferSize() override;
-  int  PackContent() override;
-  int  UnpackContent() override;
+  virtual int  CalculateContentBufferSize();
+  virtual int  PackContent();
+  virtual int  UnpackContent();
 
 };
 

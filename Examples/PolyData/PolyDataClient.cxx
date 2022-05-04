@@ -71,8 +71,7 @@ int main(int argc, char* argv[])
     igtl::MessageHeader::Pointer headerMsg;
     headerMsg = igtl::MessageHeader::New();
     headerMsg->InitPack();
-    bool timeout(false);
-    igtlUint64 rs = socket->Receive(headerMsg->GetPackPointer(), headerMsg->GetPackSize(), timeout);
+    int rs = socket->Receive(headerMsg->GetPackPointer(), headerMsg->GetPackSize());
     if (rs == 0)
       {
       std::cerr << "Connection closed." << std::endl;
@@ -118,8 +117,7 @@ int ReceivePolyData(igtl::ClientSocket::Pointer& socket, igtl::MessageHeader::Po
   PolyData->AllocatePack();
   
   // Receive transform data from the socket
-  bool timeout(false);
-  socket->Receive(PolyData->GetPackBodyPointer(), PolyData->GetPackBodySize(), timeout);
+  socket->Receive(PolyData->GetPackBodyPointer(), PolyData->GetPackBodySize());
   
   // Deserialize the transform data
   // If you want to skip CRC check, call Unpack() without argument.

@@ -74,7 +74,7 @@ public:
   H265Encoder(char * configFile = NULL);
   ~H265Encoder();
   
-  int FillSpecificParameters() override;
+  virtual int FillSpecificParameters();
   
   /**
    * @brief Enumerate the type of rate control mode
@@ -87,38 +87,38 @@ public:
    RC_OFF_MODE = -1,         ///< rate control off mode
    } RC_MODES;
    */
-  int SetRCMode(int value) override;
+  virtual int SetRCMode(int value);
   
-  int SetKeyFrameDistance(int frameNum) override {return -1;};
+  virtual int SetKeyFrameDistance(int frameNum){return -1;};
   
-  int SetQP(int maxQP, int minQP) override;
+  virtual int SetQP(int maxQP, int minQP);
   
   /**
    Parse the configuration file to initialize the encoder and server.
    */
-  int InitializeEncoder() override;
+  virtual int InitializeEncoder();
   
-  int ConvertToLocalImageFormat(SourcePicture* pSrcPic) override;
+  virtual int ConvertToLocalImageFormat(SourcePicture* pSrcPic);
   
   /**
    Encode a frame, for performance issue, before encode the frame, make sure the frame pointer is updated with a new frame.
    Otherwize, the old frame will be encoded.
    */
-  int EncodeSingleFrameIntoVideoMSG(SourcePicture* pSrcPic, igtl::VideoMessage* videoMessage, bool isGrayImage = false ) override;
+  virtual int EncodeSingleFrameIntoVideoMSG(SourcePicture* pSrcPic, igtl::VideoMessage* videoMessage, bool isGrayImage = false );
   
-  int SetPicWidthAndHeight(unsigned int Width, unsigned int Height) override;
+  virtual int SetPicWidthAndHeight(unsigned int Width, unsigned int Height);
   
-  unsigned int GetPicWidth() override {return this->sSvcParam->sourceWidth;};
+  virtual unsigned int GetPicWidth(){return this->sSvcParam->sourceWidth;};
   
-  unsigned int GetPicHeight() override {return this->sSvcParam->sourceHeight;};
+  virtual unsigned int GetPicHeight(){return this->sSvcParam->sourceHeight;};
   
-  int SetLosslessLink(bool linkMethod) override;
+  virtual int SetLosslessLink(bool linkMethod);
   
-  int SetSpeed(int speed) override;
+  virtual int SetSpeed(int speed);
   
-  int SetRCTaregetBitRate(unsigned int bitRate) override;
+  virtual int SetRCTaregetBitRate(unsigned int bitRate);
   
-  bool GetLosslessLink() override {return this->sSvcParam->bLossless;};
+  virtual bool GetLosslessLink(){return this->sSvcParam->bLossless;};
   
 protected:
   

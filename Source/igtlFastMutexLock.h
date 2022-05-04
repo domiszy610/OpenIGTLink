@@ -81,7 +81,7 @@ protected:
   ~FastMutexLock() {}
   
   SimpleFastMutexLock   m_SimpleFastMutexLock;
-  void PrintSelf(std::ostream& os) const override;
+  void PrintSelf(std::ostream& os) const;
   
 private:
   FastMutexLock(const Self&); //purposely not implemented

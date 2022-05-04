@@ -115,7 +115,7 @@ protected:
   
   std::vector<ClientDest> clients;
 
-  void PrintSelf(std::ostream& os) const override;
+  void PrintSelf(std::ostream& os) const;
 
 private:
   UDPServerSocket(const UDPServerSocket&); // Not implemented.

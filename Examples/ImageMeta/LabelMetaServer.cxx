@@ -77,8 +77,7 @@ int main(int argc, char* argv[])
         headerMsg->InitPack();
 
         // Receive generic header from the socket
-        bool timeout(false);
-        igtlUint64 rs = socket->Receive(headerMsg->GetPackPointer(), headerMsg->GetPackSize(), timeout);
+        int rs = socket->Receive(headerMsg->GetPackPointer(), headerMsg->GetPackSize());
         if (rs == 0)
           {
           socket->CloseSocket();

@@ -138,8 +138,7 @@ int VideoStreamIGTLinkReceiver::RunOnTCPSocket()
     igtl::MessageHeader::Pointer headerMsg;
     headerMsg = igtl::MessageHeader::New();
     headerMsg->InitPack();
-    bool timeout(false);
-    int rs = socket->Receive(headerMsg->GetPackPointer(), headerMsg->GetPackSize(), timeout);
+    int rs = socket->Receive(headerMsg->GetPackPointer(), headerMsg->GetPackSize());
     if (rs == 0)
       {
       std::cerr << "Connection closed." << std::endl;
@@ -162,9 +161,8 @@ int VideoStreamIGTLinkReceiver::RunOnTCPSocket()
       videoMsg = igtl::VideoMessage::New();
       videoMsg->SetMessageHeader(headerMsg);
       videoMsg->AllocateScalars();
-      bool timeout(false);
       // Receive body from the socket
-      socket->Receive(videoMsg->GetPackBodyPointer(), videoMsg->GetPackBodySize(), timeout);
+      socket->Receive(videoMsg->GetPackBodyPointer(), videoMsg->GetPackBodySize());
       // Deserialize the transform data
       // If you want to skip CRC check, call Unpack() without argument.
       int c = videoMsg->Unpack(1);

@@ -1,14 +1,12 @@
 PROJECT(OpenIGTLink)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
 
 INCLUDE(ExternalProject)
 
 IF(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
 ENDIF(COMMAND cmake_policy)
-
-set (CMAKE_CXX_STANDARD 11)
 #-----------------------------------------------------------------------------
 # OpenIGTlink version number.
 SET(OpenIGTLink_VERSION_MAJOR "3")
@@ -206,10 +204,6 @@ SET(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${OpenIGTLink_REQUIR
 
 #-----------------------------------------------------------------------------
 # Configure Subdirectories
-SET(igtlutil_INCLUDE_DIRS CACHE STRING "")
-MARK_AS_ADVANCED(igtlutil_INCLUDE_DIRS)
-SET(OpenIGTLink_INCLUDE_DIRS CACHE STRING "")
-MARK_AS_ADVANCED(OpenIGTLink_INCLUDE_DIRS)
 ADD_SUBDIRECTORY(Source/igtlutil)
 ADD_SUBDIRECTORY(Source)
 ADD_SUBDIRECTORY(Tools)

@@ -134,7 +134,7 @@ int SessionManager::Connect()
       }
     }
 
-  this->m_Socket->SetReceiveBlocking(0); // Pseudo non-blocking
+  this->m_Socket->SetReceiveBlocking(0); // Psuedo non-blocking
   this->m_CurrentReadIndex = 0;
   this->m_HeaderDeserialized = 0;
   return 1;
@@ -186,8 +186,7 @@ int SessionManager::ProcessMessage()
     this->m_Header->InitBuffer();
   
     // Receive generic header from the socket
-    bool timeout(false);
-    igtl_uint64 r = this->m_Socket->Receive(this->m_Header->GetBufferPointer(), this->m_Header->GetBufferSize(), timeout, 0);
+    int r = this->m_Socket->Receive(this->m_Header->GetBufferPointer(), this->m_Header->GetBufferSize(), 0);
     if (r == 0)
       {
       this->m_CurrentReadIndex = 0;
@@ -197,7 +196,7 @@ int SessionManager::ProcessMessage()
     if (r != this->m_Header->GetBufferSize())
       {
       // Only a part of header has arrived.
-      if (timeout) // timeout
+      if (r < 0) // timeout
         {
         this->m_CurrentReadIndex = 0;
         }
@@ -213,9 +212,8 @@ int SessionManager::ProcessMessage()
   else if (this->m_CurrentReadIndex < IGTL_HEADER_SIZE)
     {
     // Message transfer was interrupted in the header
-    bool timeout(false);
-    igtl_uint64 r = this->m_Socket->Receive((void*)((char*)this->m_Header->GetBufferPointer()+this->m_CurrentReadIndex),
-                                    this->m_Header->GetBufferSize()-this->m_CurrentReadIndex, timeout, 0);
+    int r = this->m_Socket->Receive((void*)((char*)this->m_Header->GetBufferPointer()+this->m_CurrentReadIndex),
+                                    this->m_Header->GetBufferSize()-this->m_CurrentReadIndex, 0);
     if (r == 0)
       {
       this->m_CurrentReadIndex = 0;
@@ -288,7 +286,7 @@ int SessionManager::ProcessMessage()
     this->m_HeaderDeserialized = 1;
     }
 
-  igtl_uint64 r = this->m_CurrentMessageHandler->ReceiveMessage(this->m_Socket, this->m_Header,
+  int r = this->m_CurrentMessageHandler->ReceiveMessage(this->m_Socket, this->m_Header,
                                                         this->m_CurrentReadIndex-IGTL_HEADER_SIZE);
   if (r == this->m_Header->GetBodySizeToRead())
     {
@@ -319,3 +317,5 @@ int SessionManager::PushMessage(MessageBase* message)
 
 
 }
+
+

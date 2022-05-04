@@ -56,13 +56,13 @@ public:
 
 protected:
   StringMessage();
-  ~StringMessage() override;
+  ~StringMessage();
   
 protected:
 
-  igtlUint64 CalculateContentBufferSize() override;
-  int  PackContent() override;
-  int  UnpackContent() override;
+  virtual int  CalculateContentBufferSize();
+  virtual int  PackContent();
+  virtual int  UnpackContent();
   
   /// The encoding of the string.
   /// The value is defined in IANA Character Sets (http://www.iana.org/assignments/character-sets).

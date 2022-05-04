@@ -91,9 +91,9 @@ protected:
   
 protected:
 
-  igtlUint64 CalculateContentBufferSize() override;
-  int  PackContent() override;
-  int  UnpackContent() override;
+  virtual int  CalculateContentBufferSize();
+  virtual int  PackContent();
+  virtual int  UnpackContent();
 
   /// The type of message formats (either POSITION_ONLY, WITH_QUATERNION3, or ALL).
   igtlInt32    m_PackType;

@@ -156,9 +156,9 @@ protected:
   
 protected:
 
-  igtlUint64 CalculateContentBufferSize() override;
-  int  PackContent() override;
-  int  UnpackContent() override;
+  virtual int  CalculateContentBufferSize();
+  virtual int  PackContent();
+  virtual int  UnpackContent();
   
   /// A pointer to the N-D array.
   ArrayBase *  m_Array;

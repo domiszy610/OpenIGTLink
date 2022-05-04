@@ -40,10 +40,9 @@
 #ifndef __igtlSocket_h
 #define __igtlSocket_h
 
-#include "igtlMacro.h"
 #include "igtlObject.h"
 #include "igtlObjectFactory.h"
-#include "igtlTypes.h"
+#include "igtlMacro.h"
 #include "igtlWin32Header.h"
 
 
@@ -80,16 +79,15 @@ public:
   /// Returns 1 on success, 0 on error and raises vtkCommand::ErrorEvent.
   /// SIGPIPE or other signal may be raised on systems (e.g., Sun Solaris) where
   /// MSG_NOSIGNAL flag is not supported for the socket send method.
-  int Send(const void* data, igtlUint64 length);
+  int Send(const void* data, int length);
 
   /// Receive data from the socket.
   /// This call blocks until some data is read from the socket, unless timeout is set
   /// by SetTimeout() or SetReceiveTimeout().
   /// When the readFully flag is set, this call will block until all the requested data is
   /// read from the socket. The readFully flag will be ignored if the timeout is active.
-  /// 0 on error, else number of bytes read is returned.
-  /// On timeout, the timeout variable will be set to true and the return value is ignored
-  igtlUint64 Receive(void* data, igtlUint64 length, bool& timeout, int readFully=1);
+  /// 0 on error, -1 on timeout, else number of bytes read is returned.
+  int Receive(void* data, int length, int readFully=1);
 
   /// Set sending/receiving timeout for the existing socket in millisecond.
   /// This function should be called after opening the socket.
@@ -118,13 +116,13 @@ public:
   /// The Skip() call has been newly introduced to the igtlSocket,
   /// after the class is imported from VTK, thus the call is
   /// not available in vtkSocket class.
-  int Skip(igtlUint64 length, int skipFully=1);
+  int Skip(int length, int skipFully=1);
 
 protected:
   Socket();
   ~Socket();
 
-  void PrintSelf(std::ostream& os) const override;
+  void PrintSelf(std::ostream& os) const;
 
   int m_SocketDescriptor;
   igtlGetMacro(SocketDescriptor, int);
@@ -164,7 +162,7 @@ protected:
   int GetPort(int socketdescriptor);
 
   /// Selects set of sockets. Returns 0 on timeout, -1 on error.
-  /// 1 on success. Selected socket's index is returned through
+  /// 1 on success. Selected socket's index is returned thru 
   /// selected_index
   static int SelectSockets(const int* sockets_to_select, int size,
     unsigned long msec, int* selected_index);

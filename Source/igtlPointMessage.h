@@ -120,11 +120,11 @@ public:
 
 protected:
   GetPointMessage() : MessageBase() { this->m_SendMessageType  = "GET_POINT"; };
-  ~GetPointMessage() override {};
+  ~GetPointMessage() {};
 protected:
-  igtlUint64 CalculateContentBufferSize() override { return 0; };
-  int  PackContent() override        { AllocateBuffer(); return 1; };
-  int  UnpackContent() override      { return 1; };
+  virtual int  CalculateContentBufferSize() { return 0; };
+  virtual int  PackContent()        { AllocateBuffer(); return 1; };
+  virtual int  UnpackContent()      { return 1; };
 };
 
 
@@ -154,13 +154,13 @@ public:
 
 protected:
   PointMessage();
-  ~PointMessage() override;
+  ~PointMessage();
   
 protected:
 
-  igtlUint64 CalculateContentBufferSize() override;
-  int  PackContent() override;
-  int  UnpackContent() override;
+  virtual int  CalculateContentBufferSize();
+  virtual int  PackContent();
+  virtual int  UnpackContent();
 
   /// A list of pointers to the points.
   std::vector<PointElement::Pointer> m_PointList;
